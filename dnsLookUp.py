@@ -33,7 +33,7 @@ def basicIP_lookUp(domain):
 
 
 def extendedIP_lookUp(domain):
-    print_section("Extented IP Lookup")
+    print_section("Extended IP Lookup")
     try:
         hostname, aliases, ip_list = socket.gethostbyname_ex(domain)
         print(f"  Hostname    : {hostname}")
@@ -89,10 +89,10 @@ def reverse_dns_lookup(ip_address):
 def dns_record_query(domain):
     if not Dns_py_available:
         print_section("Advanced DNS Records")
-        print("  NeedED Library not available.")
+        print("  Needed Library not available.")
         print("  skipping advanced record lookup")
         return
-    record_types = ["A", "AAAA", "MX", "NS", "CANME", "TXT", "SOA"]
+    record_types = ["A", "AAAA", "MX", "NS", "CNAME", "TXT", "SOA"]
 
     print_section("DNS Record Lookup by dnspython")
     print(f"  Records for domain : {domain}\n")
@@ -114,7 +114,7 @@ def dns_record_query(domain):
                         f"           Serial : {rdata.serial} ",
                     )
 
-                elif rtype == "txt":
+                elif rtype == "TXT":
                     txt_value = b"".join(rdata.strings).decode(
                         "utf-8", errors="replace"
                     )
@@ -137,7 +137,7 @@ def dns_record_query(domain):
 def reverse_dns_advanced(ip_address):
     if not Dns_py_available:
         return
-    print_section(f"Reverse DNS via PTR recored for {ip_address}")
+    print_section(f"Reverse DNS via PTR record for {ip_address}")
     try:
         revName = dns.reversename.from_address(ip_address)
         answers = dns.resolver.resolve(revName, "PTR")
@@ -165,7 +165,7 @@ def DomainInfo_Summary(domain):
     try:
         _, _, ip_list = socket.gethostbyname_ex(domain)
         if len(ip_list) > 1:
-            print(f"  All IPv4 adresses : {' , '.join(ip_list)}")
+            print(f"  All IPv4 addresses : {' , '.join(ip_list)}")
     except Exception:
         pass
 
@@ -235,7 +235,7 @@ def run_it():
             case "2":
                 extendedIP_lookUp(domain)
 
-            case 3:
+            case "3":
                 add_info_lookUp(domain)
 
             case "4":
